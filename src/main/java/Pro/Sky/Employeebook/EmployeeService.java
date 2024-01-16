@@ -27,14 +27,9 @@ public class EmployeeService {
     public Map<Employee, String> removeEmployee(String firstName, String lastName, String passport) {
         Employee employee = new Employee(firstName, lastName);
         Map<Employee, String> map = new HashMap<>();
-        for (Employee employee1 : employes.keySet()) {
-            if (employee1.getFirstName().equals(employee.getFirstName()) &&
-                    employee1.getlastName().equals(employee.getlastName())) {
-
-                employee1 = employee;
-                employes.remove(employee1);
-                map.put(employee1, passport);
-            }
+        if (employes.containsKey(employee)) {
+            employes.remove(employee);
+            map.put(employee, passport);
         }
         return map;
     }
@@ -42,15 +37,14 @@ public class EmployeeService {
     public Map<Employee, String> searchEmployee(String firstName, String lastName, String passport) {
         Employee employee = new Employee(firstName, lastName);
         Map<Employee, String> map = new HashMap<>();
-        for (Employee employee1 : employes.keySet()) {
-            if (employee1.getFirstName().equals(employee.getFirstName()) &&
-                    employee1.getlastName().equals(employee.getlastName())) {
-                employee1 = employee;
-                map.put(employee1, passport);
-                System.out.println(map);
-
-            }
+        if (employes.containsKey(employee)) {
+            employes.remove(employee);
+            map.put(employee, passport);
         }
+
+        System.out.println(map);
+
+
         return map;
     }
 
