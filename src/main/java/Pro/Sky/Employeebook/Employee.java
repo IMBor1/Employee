@@ -5,8 +5,6 @@ import java.util.Objects;
 public class Employee {
     private String firstName;
     private String lastName;
-    private String passport;
-
 
 
     public Employee(String firstName, String lastName) {
@@ -14,8 +12,8 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getPassport() {
-        return passport;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
     public String getFirstName() {
         return firstName;
