@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static Pro.Sky.Employeebook.EmployeeService.MAX_EMPLOYES;
 import static Pro.Sky.Employeebook.EmployeeService.employes;
 
@@ -21,31 +23,37 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public Employee addEmployee(@RequestParam("firstName") String firstName,
-                                @RequestParam("lastName") String lastName) {
+                                @RequestParam("lastName") String lastName,
+                                @RequestParam("department") Integer department,
+                                @RequestParam("salary") Double salary) {
         if (employes.size() >= MAX_EMPLOYES) {
             throw new EmployeeStorageIsFullException("Список заполнен");
         }
 
-        return employeeService.addEmployee(firstName, lastName);
+        return employeeService.addEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping(path = "/remove")
     public Employee removeEmployee(@RequestParam(value = "firstName", required = false) String firstName,
-                                   @RequestParam(value = "lastName", required = false) String lastName) {
+                                   @RequestParam(value = "lastName", required = false) String lastName,
+                                   @RequestParam("department") Integer department,
+                                   @RequestParam("salary") Double salary) {
 
 
-        return employeeService.removeEmployee(firstName, lastName);
+        return employeeService.removeEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping(path = "/search")
     public Employee searchEmployee(@RequestParam("firstName") String firstName,
-                                   @RequestParam("lastName") String lastName) {
+                                   @RequestParam("lastName") String lastName,
+                                   @RequestParam("department") Integer department,
+                                   @RequestParam("salary") Double salary) {
 
-        return employeeService.searchEmployee(firstName, lastName);
+        return employeeService.searchEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping(path = "/allEmployes")
-    public String allEmployes() {
+    public List<Employee> allEmployes() {
         return employeeService.allEmployes();
     }
 }

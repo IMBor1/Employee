@@ -4,7 +4,9 @@ import Pro.Sky.Employeebook.Exception.EmployeeAlreadyAddedException;
 import Pro.Sky.Employeebook.Exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,8 +20,8 @@ public class EmployeeService {
 
     final static int MAX_EMPLOYES = 10;
 
-    public Employee addEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+    public Employee addEmployee(String firstName, String lastName, int department, double salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
         if (employes.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException("такой сотрудник уже есть");
         }
@@ -28,8 +30,8 @@ public class EmployeeService {
         return employee;
     }
 
-    public Employee removeEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+    public Employee removeEmployee(String firstName, String lastName, int department, double salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
         if (employes.containsKey(employee.getFullName())) {
             employes.remove(employee.getFullName());
 
@@ -38,8 +40,8 @@ public class EmployeeService {
         throw new EmployeeNotFoundException("человек не найден");
     }
 
-    public Employee searchEmployee(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+    public Employee searchEmployee(String firstName, String lastName, int department, double salary) {
+        Employee employee = new Employee(firstName, lastName, department, salary);
         if (employes.containsKey(employee.getFullName())) {
             return employes.get(employee.getFullName());
 
@@ -48,7 +50,9 @@ public class EmployeeService {
         throw new EmployeeNotFoundException("человек не найден");
     }
 
-    public String allEmployes() {
-        return employes.keySet().toString();
+    public List<Employee> allEmployes() {
+        List<Employee> list = new ArrayList<>();
+        list.addAll(employes.values());
+        return list;
     }
 }
