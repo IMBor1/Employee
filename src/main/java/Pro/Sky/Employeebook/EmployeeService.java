@@ -2,50 +2,53 @@ package Pro.Sky.Employeebook;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Service
 public class EmployeeService {
-    static List<Employee> employes = new ArrayList<>(List.of(new Employee("kolya", "tor")));
+    public static Map<Employee, String> employes;
+
+    public EmployeeService(Map<Employee, String> employes) {
+        this.employes = new HashMap<>();
+    }
 
     final static int MAX_EMPLOYES = 10;
 
-    public Employee addEmployee(String firstName, String lastName) {
+    public Map<Employee, String> addEmployee(String firstName, String lastName, String passport) {
         Employee employee = new Employee(firstName, lastName);
-        employes.add(employee);
-        return employee;
+        Map<Employee, String> map = new HashMap<>(Map.of(employee, passport));
+        employes.put(employee, passport);
+        return map;
 
     }
 
-    public Employee removeEmployee(String firstName, String lastName) {
-        Employee e = new Employee(firstName, lastName);
-
-        for (Employee employee : employes) {
-            if (employee.getFirstName().equals(firstName) &&
-                    employee.getlastName().equals(lastName)) {
-                e = employee;
-                employes.remove(employee);
-            }
+    public Map<Employee, String> removeEmployee(String firstName, String lastName, String passport) {
+        Employee employee = new Employee(firstName, lastName);
+        Map<Employee, String> map = new HashMap<>();
+        if (employes.containsKey(employee)) {
+            employes.remove(employee);
+            map.put(employee, passport);
         }
-        return e;
+        return map;
     }
 
-    public Employee searchEmployee(String firstName, String lastName) {
-        Employee e = new Employee(firstName, lastName);
-
-        for (Employee employee : employes) {
-            if (employee.getFirstName().equals(firstName) &&
-                    employee.getlastName().equals(lastName)) {
-                e = employee;
-                System.out.println(employee);
-
-            }
+    public Map<Employee, String> searchEmployee(String firstName, String lastName, String passport) {
+        Employee employee = new Employee(firstName, lastName);
+        Map<Employee, String> map = new HashMap<>();
+        if (employes.containsKey(employee)) {
+            employes.remove(employee);
+            map.put(employee, passport);
         }
-        return e;
+
+        System.out.println(map);
+
+
+        return map;
     }
 
     public String allEmployes() {
-        return employes.toString();
+        return employes.keySet().toString();
     }
 }
