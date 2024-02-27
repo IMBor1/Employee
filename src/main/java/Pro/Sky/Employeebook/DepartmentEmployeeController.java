@@ -29,6 +29,11 @@ public class DepartmentEmployeeController {
         return departmentEmployeeService.minDepartment(department);
     }
 
+    @GetMapping(path = "/{department}/salary/sum")
+    public Double printSumSalaryByDep(@RequestParam("department") Double department) {
+        return departmentEmployeeService.sumSalaryByDepartment(department);
+    }
+
     @GetMapping(path = "/{department}/employees")
     public List<Employee> printListByDepartment(@RequestParam("department") Integer department) {
 
