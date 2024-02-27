@@ -19,23 +19,23 @@ public class DepartmentEmployeeController {
     }
 
 
-    @GetMapping(path = "/max-salary")
+    @GetMapping(path = "/{department}/salary/max")
     public Optional<Employee> printMaxSalaryByDep(@RequestParam("department") Integer department) {
         return departmentEmployeeService.maxDepartment(department);
     }
 
-    @GetMapping(path = "/min-salary")
+    @GetMapping(path = "/{department}/salary/min")
     public Optional<Employee> printMinSalaryByDep(@RequestParam("department") Integer department) {
         return departmentEmployeeService.minDepartment(department);
     }
 
-    @GetMapping(path = "all-by-department")
+    @GetMapping(path = "/{department}/employees")
     public List<Employee> printListByDepartment(@RequestParam("department") Integer department) {
 
         return departmentEmployeeService.listByDepartment(department);
     }
 
-    @GetMapping(path = "all")
+    @GetMapping(path = "/employees")
     public Map<Integer, List<Employee>> printAllDepartments() {
         return departmentEmployeeService.allByDepartment();
     }

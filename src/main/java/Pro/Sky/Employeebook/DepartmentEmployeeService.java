@@ -33,6 +33,12 @@ public class DepartmentEmployeeService {
                 .max(Comparator.comparingInt(e -> (int) e.getSalary()));
 
     }
+//    public Optional<Employee> sumSalaryByDepartment(int department) {
+//        return employes.values().stream()
+//                .filter(e -> e.getDepartment() == department)
+//                .sum(Comparator.comparingInt(e -> (int) e.getSalary()));
+//
+//    }
 
     public List<Employee> listByDepartment(int department) {
         return employes.values().stream()
