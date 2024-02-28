@@ -36,7 +36,8 @@ public class EmployeeServiceTest {
 
     @Test
     void BobSearch() {
-        map.put("Bob Red", BOB);
+        employeeService.addEmployee("Bob", "Red",
+                2, 15000);
         Employee result = employeeService.searchEmployee("Bob", "Red",
                 2, 15000);
         assertEquals(result, BOB);
@@ -44,10 +45,20 @@ public class EmployeeServiceTest {
 
     @Test
     void BobNotFound() {
-        map.put("Bob Red", BOB);
-        Employee result = employeeService.searchEmployee("Kolya", "Red",
+        employeeService.addEmployee("Kolya", "Red",
                 2, 15000);
-        assertThrows(EmployeeNotFoundException.class, () -> employeeService.searchEmployee("Kolya", "Red",
+
+        assertThrows(EmployeeNotFoundException.class, () -> employeeService.searchEmployee("Bob", "Red",
                 2, 15000));
     }
+
+    @Test
+    void BobRemove() {
+        employeeService.addEmployee("Bob", "Red",
+                2, 15000);
+        Employee result = employeeService.removeEmployee("Bob", "Red",
+                2, 15000);
+        assertEquals(result, BOB);
+    }
+
 }
