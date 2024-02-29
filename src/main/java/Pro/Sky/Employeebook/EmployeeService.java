@@ -2,7 +2,8 @@ package Pro.Sky.Employeebook;
 
 import Pro.Sky.Employeebook.Exception.EmployeeAlreadyAddedException;
 import Pro.Sky.Employeebook.Exception.EmployeeNotFoundException;
-import Pro.Sky.Employeebook.Exception.InvalidException;
+import Pro.Sky.Employeebook.Exception.EmployeeStorageIsFullException;
+import Pro.Sky.Employeebook.Exception.MyInvalidException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,14 @@ public class EmployeeService {
     final static int MAX_EMPLOYES = 10;
 
     public Employee addEmployee(String firstName, String lastName, int department, double salary) {
+
         isAlpha(firstName, lastName);
         Employee employee = new Employee(capitalizeFirstName(firstName), capitalizeLastName(lastName), department, salary);
         if (employes.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException("такой сотрудник уже есть");
+        }
+        if (employes.size() > MAX_EMPLOYES) {
+            throw new EmployeeStorageIsFullException("список переполнен");
         }
         employes.put(employee.getFullName(), employee);
 
@@ -64,7 +69,7 @@ public class EmployeeService {
 
     public void isAlpha(String firstName, String lastName) {
         if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
-            throw new InvalidException();
+            throw new MyInvalidException();
         }
     }
 

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -18,22 +17,23 @@ public class DepartmentEmployeeService {
         this.employeeService = employeeService;
     }
 
-    public Optional<Employee> minDepartment(int department) {
+    public Employee minDepartment(int department) {
         return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
-                .min(Comparator.comparingInt(e -> (int) e.getSalary()));
+                .min(Comparator.comparingDouble(Employee::getSalary))
+                .orElseThrow();
+    }
 
+
+    public Employee maxDepartment(int department) {
+        return employeeService.allEmployes().stream()
+                .filter(e -> e.getDepartment() == department)
+                .max(Comparator.comparingDouble(Employee::getSalary))
+                .orElseThrow();
 
     }
 
-    public Optional<Employee> maxDepartment(int department) {
-        return employeeService.allEmployes().stream()
-                .filter(e -> e.getDepartment() == department)
-                .max(Comparator.comparingInt(e -> (int) e.getSalary()));
-
-    }
-
-    public double sumSalaryByDepartment(Double department) {
+    public double sumSalaryByDepartment(int department) {
         return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
                 .mapToDouble(Employee::getSalary)
@@ -47,7 +47,7 @@ public class DepartmentEmployeeService {
 
     }
 
-    public Map<Integer, List<Employee>> allByDepartment() {
+    public Map<Integer, List<Employee>> allByDepartments() {
         return employeeService.allEmployes().stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }

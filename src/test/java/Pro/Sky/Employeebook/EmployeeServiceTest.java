@@ -3,14 +3,17 @@ package Pro.Sky.Employeebook;
 import Pro.Sky.Employeebook.Exception.EmployeeAlreadyAddedException;
 import Pro.Sky.Employeebook.Exception.EmployeeNotFoundException;
 import Pro.Sky.Employeebook.Exception.EmployeeStorageIsFullException;
+import Pro.Sky.Employeebook.Exception.MyInvalidException;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
 public class EmployeeServiceTest {
     Map<String, Employee> map = new HashMap<>();
     EmployeeService employeeService = new EmployeeService(map);
@@ -27,7 +30,6 @@ public class EmployeeServiceTest {
 
     @Test
     void addAndreyButHeIsCreated() {
-        map.put("Andrey Moroz", ANDREY);
         Employee result = employeeService.addEmployee("Andrey", "Moroz",
                 1, 10000);
         assertThrows(EmployeeAlreadyAddedException.class,
@@ -63,14 +65,29 @@ public class EmployeeServiceTest {
     }
 
     @Test
+    void notAlphaTest() {
+        assertThrows(MyInvalidException.class,
+                () -> employeeService.addEmployee("rock1", "lou", 3, 300));
+    }
+    @Test
     void sizeEmployesTest() {
-        List<Employee> result = employeeService.allEmployes();
-        result.add(ANDREY);
-        result.add(BOB);
 
         assertThrows(EmployeeStorageIsFullException.class,
-                () -> employeeService.addEmployee("Karl", "rut", 2, 6000));
-        assertNotEquals(2, result.size());
+                () -> {
+                    employeeService.addEmployee("Karl", "Rutl", 2, 6000);
+                    employeeService.addEmployee("Karlo", "Rutm", 2, 6000);
+                    employeeService.addEmployee("Karln", "Rutk", 2, 6000);
+                    employeeService.addEmployee("Karls", "Ruta", 2, 6000);
+                    employeeService.addEmployee("Karla", "Ruto", 2, 6000);
+                    employeeService.addEmployee("Karle", "Ruti", 2, 6000);
+                    employeeService.addEmployee("Karly", "Rutu", 2, 6000);
+                    employeeService.addEmployee("Karlu", "Ruty", 2, 6000);
+                    employeeService.addEmployee("Karli", "Rute", 2, 6000);
+                    employeeService.addEmployee("Karlop", "Ruta", 2, 6000);
+                    employeeService.addEmployee("Karl1", "Rut", 2, 6000);
+
+                });
+        System.out.println(employeeService.allEmployes().size());
     }
 
 }

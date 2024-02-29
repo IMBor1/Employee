@@ -1,5 +1,6 @@
 package Pro.Sky.Employeebook;
 
+import Pro.Sky.Employeebook.Exception.DepartmentIsEmpty;
 import Pro.Sky.Employeebook.Exception.NotFoundDepartment;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,9 +34,18 @@ public class DepartmentEmployeeServiceTest {
     }
 
     @Test
+    void maxSalaryTest() {
+
+        when(mockEmployeeService.allEmployes())
+                .thenReturn(EMPLOYEE);
+        assertEquals(MAX_SALARY, departmentEmployeeService.maxDepartment(1));
+    }
+
+
+    @Test
     void notFoundDepartment() {
 
-        when(departmentEmployeeService.allByDepartment())
+        when(departmentEmployeeService.allByDepartments())
                 .thenThrow(NotFoundDepartment.class);
         assertThrows(NotFoundDepartment.class,
                 () -> departmentEmployeeService.listByDepartment(8));
@@ -45,11 +54,30 @@ public class DepartmentEmployeeServiceTest {
 
     @Test
     void isEmptyDepartament() {
-        when(departmentEmployeeService.allByDepartment())
-                .thenThrow(NotFoundDepartment.class);
-        assertThrows(NotFoundDepartment.class,
-                () -> departmentEmployeeService.listByDepartment(isNull()));
+        when(mockEmployeeService.allEmployes())
+                .thenThrow(DepartmentIsEmpty.class);
+        assertThrows(DepartmentIsEmpty.class,
+                () -> departmentEmployeeService.allByDepartments());
     }
 
+    @Test
+    void sumSalaryByDepartmentTest() {
+        when(mockEmployeeService.allEmployes())
+                .thenReturn(EMPLOYEE);
+        assertEquals((MIN_SALARY.getSalary() + MAX_SALARY.getSalary()),
+                departmentEmployeeService.sumSalaryByDepartment(1));
+    }
 
+    @Test
+    void allEmployeeByDepartmentTest() {
+        when(mockEmployeeService.allEmployes())
+                .thenReturn(EMPLOYEE);
+        assertEquals(EMPLOYEE, departmentEmployeeService.listByDepartment(1));
+    }
+//    @Test
+//    void allEmployesByAllDepartmentsTest() {
+//        when(mockEmployeeService.allEmployes())
+//                .thenReturn(EMPLOYEE);
+//        assertEquals(EMPLOYEE, departmentEmployeeService.allByDepartments());
+//    }
 }

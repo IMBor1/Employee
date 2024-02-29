@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/departments")
@@ -20,17 +19,17 @@ public class DepartmentEmployeeController {
 
 
     @GetMapping(path = "/{department}/salary/max")
-    public Optional<Employee> printMaxSalaryByDep(@RequestParam("department") Integer department) {
+    public Employee printMaxSalaryByDep(@RequestParam("department") Integer department) {
         return departmentEmployeeService.maxDepartment(department);
     }
 
     @GetMapping(path = "/{department}/salary/min")
-    public Optional<Employee> printMinSalaryByDep(@RequestParam("department") Integer department) {
+    public Employee printMinSalaryByDep(@RequestParam("department") Integer department) {
         return departmentEmployeeService.minDepartment(department);
     }
 
     @GetMapping(path = "/{department}/salary/sum")
-    public Double printSumSalaryByDep(@RequestParam("department") Double department) {
+    public Double printSumSalaryByDep(@RequestParam("department") Integer department) {
         return departmentEmployeeService.sumSalaryByDepartment(department);
     }
 
@@ -42,7 +41,7 @@ public class DepartmentEmployeeController {
 
     @GetMapping(path = "/employees")
     public Map<Integer, List<Employee>> printAllDepartments() {
-        return departmentEmployeeService.allByDepartment();
+        return departmentEmployeeService.allByDepartments();
     }
 }
 
