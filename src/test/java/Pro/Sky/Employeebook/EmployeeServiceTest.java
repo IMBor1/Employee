@@ -2,13 +2,14 @@ package Pro.Sky.Employeebook;
 
 import Pro.Sky.Employeebook.Exception.EmployeeAlreadyAddedException;
 import Pro.Sky.Employeebook.Exception.EmployeeNotFoundException;
+import Pro.Sky.Employeebook.Exception.EmployeeStorageIsFullException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EmployeeServiceTest {
     Map<String, Employee> map = new HashMap<>();
@@ -59,6 +60,17 @@ public class EmployeeServiceTest {
         Employee result = employeeService.removeEmployee("Bob", "Red",
                 2, 15000);
         assertEquals(result, BOB);
+    }
+
+    @Test
+    void sizeEmployesTest() {
+        List<Employee> result = employeeService.allEmployes();
+        result.add(ANDREY);
+        result.add(BOB);
+
+        assertThrows(EmployeeStorageIsFullException.class,
+                () -> employeeService.addEmployee("Karl", "rut", 2, 6000));
+        assertNotEquals(2, result.size());
     }
 
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static Pro.Sky.Employeebook.EmployeeService.employes;
 
 @Service
 public class DepartmentEmployeeService {
@@ -20,7 +19,7 @@ public class DepartmentEmployeeService {
     }
 
     public Optional<Employee> minDepartment(int department) {
-        return employes.values().stream()
+        return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
                 .min(Comparator.comparingInt(e -> (int) e.getSalary()));
 
@@ -28,21 +27,21 @@ public class DepartmentEmployeeService {
     }
 
     public Optional<Employee> maxDepartment(int department) {
-        return employes.values().stream()
+        return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
                 .max(Comparator.comparingInt(e -> (int) e.getSalary()));
 
     }
 
     public double sumSalaryByDepartment(Double department) {
-        return employes.values().stream()
+        return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
                 .mapToDouble(Employee::getSalary)
                 .sum();
     }
 
     public List<Employee> listByDepartment(int department) {
-        return employes.values().stream()
+        return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
 

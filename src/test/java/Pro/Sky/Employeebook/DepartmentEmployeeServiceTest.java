@@ -1,5 +1,6 @@
 package Pro.Sky.Employeebook;
 
+import Pro.Sky.Employeebook.Exception.NotFoundDepartment;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,5 +32,24 @@ public class DepartmentEmployeeServiceTest {
                 .thenReturn(EMPLOYEE);
         assertEquals(MIN_SALARY, departmentEmployeeService.minDepartment(1));
     }
+
+    @Test
+    void notFoundDepartment() {
+
+        when(departmentEmployeeService.allByDepartment())
+                .thenThrow(NotFoundDepartment.class);
+        assertThrows(NotFoundDepartment.class,
+                () -> departmentEmployeeService.listByDepartment(8));
+    }
+
+
+    @Test
+    void isEmptyDepartament() {
+        when(departmentEmployeeService.allByDepartment())
+                .thenThrow(NotFoundDepartment.class);
+        assertThrows(NotFoundDepartment.class,
+                () -> departmentEmployeeService.listByDepartment(isNull()));
+    }
+
 
 }

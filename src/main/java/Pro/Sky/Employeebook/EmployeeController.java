@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static Pro.Sky.Employeebook.EmployeeService.MAX_EMPLOYES;
-import static Pro.Sky.Employeebook.EmployeeService.employes;
 
 
 @RestController
@@ -26,7 +25,7 @@ public class EmployeeController {
                                 @RequestParam("lastName") String lastName,
                                 @RequestParam("department") Integer department,
                                 @RequestParam("salary") Double salary) {
-        if (employes.size() >= MAX_EMPLOYES) {
+        if (employeeService.allEmployes().size() >= MAX_EMPLOYES) {
             throw new EmployeeStorageIsFullException("Список заполнен");
         }
 

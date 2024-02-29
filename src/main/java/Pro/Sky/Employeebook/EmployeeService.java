@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 public class EmployeeService {
-    public static Map<String, Employee> employes;
+    private Map<String, Employee> employes;
 
     public EmployeeService(Map<String, Employee> employes) {
         this.employes = new HashMap<>();
