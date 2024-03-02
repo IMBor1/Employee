@@ -74,10 +74,13 @@ public class DepartmentEmployeeServiceTest {
                 .thenReturn(EMPLOYEE);
         assertEquals(EMPLOYEE, departmentEmployeeService.listByDepartment(1));
     }
-//    @Test
-//    void allEmployesByAllDepartmentsTest() {
-//        when(mockEmployeeService.allEmployes())
-//                .thenReturn(EMPLOYEE);
-//        assertEquals(EMPLOYEE, departmentEmployeeService.allByDepartments());
-//    }
+
+    @Test
+    void allEmployesByAllDepartmentsTest() {
+
+        when(mockEmployeeService.allEmployes())
+                .thenReturn(EMPLOYEE);
+        assertEquals(1, departmentEmployeeService.allByDepartments().size());
+
+    }
 }
