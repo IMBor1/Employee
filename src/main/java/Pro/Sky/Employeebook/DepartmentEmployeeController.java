@@ -1,13 +1,12 @@
 package Pro.Sky.Employeebook;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/departments")
@@ -19,25 +18,30 @@ public class DepartmentEmployeeController {
     }
 
 
-    @GetMapping(path = "/max-salary")
-    public Optional<Employee> printMaxSalaryByDep(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/{id}/salary/max")
+    public Employee printMaxSalaryByDep(@PathVariable("department") Integer department) {
         return departmentEmployeeService.maxDepartment(department);
     }
 
-    @GetMapping(path = "/min-salary")
-    public Optional<Employee> printMinSalaryByDep(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/{id}/salary/min")
+    public Employee printMinSalaryByDep(@PathVariable("department") Integer department) {
         return departmentEmployeeService.minDepartment(department);
     }
 
-    @GetMapping(path = "all-by-department")
-    public List<Employee> printListByDepartment(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/{id}/salary/sum")
+    public Double printSumSalaryByDep(@PathVariable("department") Integer department) {
+        return departmentEmployeeService.sumSalaryByDepartment(department);
+    }
+
+    @GetMapping(path = "/{id}/employees")
+    public List<Employee> printListByDepartment(@PathVariable("department") Integer department) {
 
         return departmentEmployeeService.listByDepartment(department);
     }
 
-    @GetMapping(path = "all")
+    @GetMapping(path = "/employees")
     public Map<Integer, List<Employee>> printAllDepartments() {
-        return departmentEmployeeService.allByDepartment();
+        return departmentEmployeeService.allByDepartments();
     }
 }
 
