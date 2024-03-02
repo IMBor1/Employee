@@ -1,8 +1,8 @@
 package Pro.Sky.Employeebook;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,23 +18,23 @@ public class DepartmentEmployeeController {
     }
 
 
-    @GetMapping(path = "/{department}/salary/max")
-    public Employee printMaxSalaryByDep(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/{id}/salary/max")
+    public Employee printMaxSalaryByDep(@PathVariable("department") Integer department) {
         return departmentEmployeeService.maxDepartment(department);
     }
 
-    @GetMapping(path = "/{department}/salary/min")
-    public Employee printMinSalaryByDep(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/{id}/salary/min")
+    public Employee printMinSalaryByDep(@PathVariable("department") Integer department) {
         return departmentEmployeeService.minDepartment(department);
     }
 
-    @GetMapping(path = "/{department}/salary/sum")
-    public Double printSumSalaryByDep(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/{id}/salary/sum")
+    public Double printSumSalaryByDep(@PathVariable("department") Integer department) {
         return departmentEmployeeService.sumSalaryByDepartment(department);
     }
 
-    @GetMapping(path = "/{department}/employees")
-    public List<Employee> printListByDepartment(@RequestParam("department") Integer department) {
+    @GetMapping(path = "/{id}/employees")
+    public List<Employee> printListByDepartment(@PathVariable("department") Integer department) {
 
         return departmentEmployeeService.listByDepartment(department);
     }
