@@ -84,7 +84,8 @@ public class EmployeeServiceTest {
                     employeeService.addEmployee("Karlu", "Ruty", 2, 6000);
                     employeeService.addEmployee("Karli", "Rute", 2, 6000);
                     employeeService.addEmployee("Karlop", "Ruta", 2, 6000);
-                    employeeService.addEmployee("Karl1", "Rut", 2, 6000);
+                    employeeService.addEmployee("Karl", "Rut", 2, 6000);
+                    employeeService.addEmployee("Karlуу", "Rut", 2, 6000);
 
                 });
         System.out.println(employeeService.allEmployes().size());
