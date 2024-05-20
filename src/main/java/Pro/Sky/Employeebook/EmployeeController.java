@@ -1,15 +1,11 @@
 package Pro.Sky.Employeebook;
 
-import Pro.Sky.Employeebook.Exception.EmployeeStorageIsFullException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
-import static Pro.Sky.Employeebook.EmployeeService.MAX_EMPLOYES;
-import static Pro.Sky.Employeebook.EmployeeService.employes;
 
 
 @RestController
@@ -26,9 +22,6 @@ public class EmployeeController {
                                 @RequestParam("lastName") String lastName,
                                 @RequestParam("department") Integer department,
                                 @RequestParam("salary") Double salary) {
-        if (employes.size() >= MAX_EMPLOYES) {
-            throw new EmployeeStorageIsFullException("Список заполнен");
-        }
 
         return employeeService.addEmployee(firstName, lastName, department, salary);
     }

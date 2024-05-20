@@ -5,10 +5,8 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static Pro.Sky.Employeebook.EmployeeService.employes;
 
 @Service
 public class DepartmentEmployeeService {
@@ -19,29 +17,37 @@ public class DepartmentEmployeeService {
         this.employeeService = employeeService;
     }
 
-    public Optional<Employee> minDepartment(int department) {
-        return employes.values().stream()
+    public Employee minDepartment(int department) {
+        return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
-                .min(Comparator.comparingInt(e -> (int) e.getSalary()));
+                .min(Comparator.comparingDouble(Employee::getSalary))
+                .orElseThrow();
+    }
 
+
+    public Employee maxDepartment(int department) {
+        return employeeService.allEmployes().stream()
+                .filter(e -> e.getDepartment() == department)
+                .max(Comparator.comparingDouble(Employee::getSalary))
+                .orElseThrow();
 
     }
 
-    public Optional<Employee> maxDepartment(int department) {
-        return employes.values().stream()
+    public double sumSalaryByDepartment(int department) {
+        return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
-                .max(Comparator.comparingInt(e -> (int) e.getSalary()));
-
+                .mapToDouble(Employee::getSalary)
+                .sum();
     }
 
     public List<Employee> listByDepartment(int department) {
-        return employes.values().stream()
+        return employeeService.allEmployes().stream()
                 .filter(e -> e.getDepartment() == department)
                 .collect(Collectors.toList());
 
     }
 
-    public Map<Integer, List<Employee>> allByDepartment() {
+    public Map<Integer, List<Employee>> allByDepartments() {
         return employeeService.allEmployes().stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
